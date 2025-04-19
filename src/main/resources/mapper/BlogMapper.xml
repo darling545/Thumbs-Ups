@@ -19,4 +19,16 @@
         id,userId,title,coverImg,content,thumbCount,
         createTime,updateTime
     </sql>
+    <update id="batchUpdateThumbsCount">
+        update blog
+        set thumbCount = thumbCount + CASE id
+        <foreach collection="countMap.entrySet()" item="value" index="key">
+            WHEN #{key} THEN #{value}
+        </foreach>
+        END
+        WHERE id IN
+        <foreach collection="countMap.keySet()" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 </mapper>

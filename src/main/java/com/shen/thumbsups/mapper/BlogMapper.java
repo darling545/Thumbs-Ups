@@ -2,6 +2,9 @@ package com.shen.thumbsups.mapper;
 
 import com.shen.thumbsups.domain.Blog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Map;
 
 /**
 * @author 76453
@@ -10,6 +13,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity generator.domain.Blog
 */
 public interface BlogMapper extends BaseMapper<Blog> {
+
+    void batchUpdateThumbsCount(@Param("countMap")Map<Long, Long> countMap);
 
 }
 

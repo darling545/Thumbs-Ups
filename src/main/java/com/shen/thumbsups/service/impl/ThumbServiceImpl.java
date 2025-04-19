@@ -30,7 +30,7 @@ import java.util.Date;
  * @description 针对表【thumb】的数据库操作Service实现
  * @createDate 2025-04-18 10:03:40
  */
-@Service
+@Service("thumbServiceDB")
 @Slf4j
 public class ThumbServiceImpl extends ServiceImpl<ThumbMapper, Thumb>
         implements ThumbService {
@@ -72,6 +72,7 @@ public class ThumbServiceImpl extends ServiceImpl<ThumbMapper, Thumb>
                 // 更新成功后在执行
                 boolean success = update && this.save(thumb);
                 if (success) {
+                    // TODO 设置过期时间（一个月内发布的文章为热点数据，进行存入redis）
                     redisTemplate.opsForHash().put(ThumbConstant.USER_THUMB_KEY_PREFIX + loginUser.getId().toString(), blogId.toString(), thumb.getId());
                 }
                 return success;

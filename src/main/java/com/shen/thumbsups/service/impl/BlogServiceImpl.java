@@ -11,6 +11,7 @@ import com.shen.thumbsups.mapper.BlogMapper;
 import com.shen.thumbsups.service.BlogService;
 import com.shen.thumbsups.service.ThumbService;
 import com.shen.thumbsups.service.UserService;
+import com.shen.thumbsups.util.RedisKeyUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Lazy;
@@ -55,7 +56,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog>
         if (ObjUtil.isNotEmpty(loginUser)) {
             List<Object> blogIdList = blogs.stream().map(blog -> blog.getId().toString()).collect(Collectors.toList());
             // 获取点赞
-            List<Object> thumbs = redisTemplate.opsForHash().multiGet(ThumbConstant.USER_THUMB_KEY_PREFIX + loginUser.getId(), blogIdList);
+            List<Object> thumbs = redisTemplate.opsForHash().multiGet(RedisKeyUtil.getUserThumbKey(loginUser.getId()), blogIdList);
             for (int i = 0; i < thumbs.size(); i++) {
                 if (thumbs.get(i) == null) {
                     continue;
