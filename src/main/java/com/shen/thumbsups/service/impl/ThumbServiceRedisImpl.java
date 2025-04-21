@@ -36,7 +36,7 @@ import java.util.Date;
  * @description 针对表【thumb】的数据库操作Service实现
  * @createDate 2025-04-18 10:03:40
  */
-@Service("thumbService")
+@Service("thumbServiceRedis")
 @Slf4j
 public class ThumbServiceRedisImpl extends ServiceImpl<ThumbMapper, Thumb>
         implements ThumbService {
